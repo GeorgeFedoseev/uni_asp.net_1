@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Опрос";
+}
+
+<h2>Страница опроса</h2>
+
+<form action="@Url.Action("ProcessForm")" method="post">
+    <label>Имя:</label> <input type="text" name="name"/> <br>
+    <label>Фамилия:</label> <input type="text" name="surname"/> <br>
+    <label>Вопрос: род деятельности</label> <br>
+    <label>Вариант ответа:</label> <br>
+    <select name="answer">
+        <option value="student">Студент</option>
+        <option value="worker">Рабочий</option>
+    </select>
+    <button type="submit">Отправить</button>
+</form>
