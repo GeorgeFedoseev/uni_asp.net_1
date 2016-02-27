@@ -5,13 +5,31 @@
 <h2>Страница опроса</h2>
 
 <form action="@Url.Action("ProcessForm")" method="post">
-    <label>Имя:</label> <input type="text" name="name"/> <br>
-    <label>Фамилия:</label> <input type="text" name="surname"/> <br>
-    <label>Вопрос: род деятельности</label> <br>
-    <label>Вариант ответа:</label> <br>
-    <select name="answer">
-        <option value="student">Студент</option>
-        <option value="worker">Рабочий</option>
-    </select>
+    <table>
+        <tr>
+            <td><label>Имя:</label></td>
+            <td><input type="text" name="name"/></td>
+        </tr>
+
+        <tr>
+            <td><label>Фамилия:</label></td>
+            <td> <input type="text" name="surname"/></td>
+        </tr>
+        
+        <tr><td><br><label>Вопрос: <b>Ваш род занятий?</b></label></td></tr>
+
+        <tr>
+            <td><label>Ответ:</label></td>
+            <td>
+                <select name="answer">
+                    <option value="student">Студент</option>
+                    <option value="worker">Рабочий</option>
+                </select>
+            </td>
+
+        </tr>
+    </table>
+
+    
     <button type="submit">Отправить</button>
 </form>

@@ -16,10 +16,10 @@ namespace uni_aspnet_1.Controllers
             return View();
         }
 
-        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult ProcessForm()
         {
-            ViewBag.Name = Request.Form["name"];
+            ViewBag.Name = Request.Form["name"]; 
             ViewBag.Surname = Request.Form["surname"];
             ViewBag.Type = Request.Form["answer"];
   
