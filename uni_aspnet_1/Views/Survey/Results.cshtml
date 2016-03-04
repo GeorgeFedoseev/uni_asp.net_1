@@ -1,0 +1,35 @@
+﻿@using uni_aspnet_1;
+@{
+    
+    ViewBag.Title = "Results";
+}
+
+<h2>Результаты опроса:</h2>
+
+
+@if (MvcApplication.surveyResults.Count > 0) {
+    <table cellpadding="7">
+     <tr>
+        <th>Номер</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Занятость</th>
+    </tr>
+    @{int i = 1;}
+    @foreach (var result in MvcApplication.surveyResults) { 
+        <tr>
+            <td>@i</td>
+            <td>@result.name</td>
+            <td>@result.surname</td>
+            <td>@result.localizedHobby()</td>
+        </tr>
+        i++;
+    }
+    </table>
+}else{
+    <text>Пока ничего</text>
+}
+
+<br><a href="@Url.Action("Index", "Home")">Главная</a>
+
+

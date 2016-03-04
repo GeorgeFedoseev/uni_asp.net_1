@@ -2,7 +2,28 @@
     ViewBag.Title = "FormProcessed";
 }
 
-<h2>Form Processed!</h2>
-Имя: @ViewBag.Name <br>
-Фамилия: @ViewBag.Surname <br>
-Тип: @ViewBag.Type
+
+@if(ViewBag.errors.Count == 0){
+    <h2>Ваш ответ записан!</h2>
+    <text>Имя: @ViewBag.SurveyResult.name <br>
+    Фамилия: @ViewBag.SurveyResult.surname <br>
+    Хобби: @ViewBag.SurveyResult.localizedHobby()
+    </text>
+    
+}else{
+    <h2>Возникли некоторые ошибки, а именно:</h2>
+    <ul>
+    @foreach (var err in ViewBag.errors) { 
+        <li>@err</li>
+    }  
+    </ul>  
+    <a href="@Url.Action("Index")">Попробовать еще раз</a>    
+}
+
+<br><a href="@Url.Action("Results")">Все результаты</a>
+<br><a href="@Url.Action("Index", "Home")">Главная</a>
+
+
+
+
+
