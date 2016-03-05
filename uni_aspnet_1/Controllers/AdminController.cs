@@ -68,34 +68,73 @@ namespace uni_aspnet_1.Controllers
         //
         // GET: /Admin/
 
-        public ActionResult Index()
-        {
-            return View();
+        public ActionResult Index() {
+            AdminUser u = null;
+            if (Request.Cookies["session"] != null) {
+                u = findUserBySessionId(Request.Cookies["session"].Value);                
+            }
+
+            
+            if (u != null) {
+                System.Diagnostics.Debug.WriteLine("Session ok");
+                return View();
+            }else{
+                System.Diagnostics.Debug.WriteLine("No session");
+                return RedirectToAction("SignIn");
+            }            
         }
         
         [HttpGet]
         public ActionResult SignIn() {
+            AdminUser u = null;
+            if (Request.Cookies["session"] != null) {
+                u = findUserBySessionId(Request.Cookies["session"].Value);
+                if (u != null)
+                    return RedirectToAction("Index");
+            }
+
             ViewBag.errors = TempData.ContainsKey("errors")?TempData["errors"]:new List<string>();
             return View();
         }
 
+        [HttpGet]
+        public ActionResult SignOut() {
+            AdminUser u = null;
+            if (Request.Cookies["session"] != null) {
+                u = findUserBySessionId(Request.Cookies["session"].Value);
+                if (u != null){
+                    u.session_id = "";
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
-        public ActionResult SignIn(string email, string password){
+        public ActionResult SignIn(string email, string password) {
             var u = findUser(email, password);
             if(u != null){
-                var cookie = new HttpCookie("session");
-                cookie["id"] = u.updateSession();
-                Response.Cookies.Add(cookie);
+                var cookie = new HttpCookie("session", u.updateSession());
+               // cookie.Domain = "/";
+                cookie.Expires = DateTime.Now.AddDays(7);
+                Response.Cookies.Add(cookie); 
                 return RedirectToAction("Index");            
             }
 
             // redirect back to sign in page with message about wrong credentials
-            TempData["errors"] = new List<string>() {"No user with such email and password"};
+            TempData["errors"] = new List<string>() { "Пользователя с таким емейлом и паролем не существует" };
             return RedirectToAction("SignIn");
         }
 
         [HttpGet]
-        public ActionResult SignIn() {
+        public ActionResult SignUp() {
+            AdminUser u = null;
+            if (Request.Cookies["session"] != null) {
+                u = findUserBySessionId(Request.Cookies["session"].Value);
+                if (u != null)
+                    return RedirectToAction("Index");
+            }
+            
             ViewBag.errors = TempData.ContainsKey("errors") ? TempData["errors"] : new List<string>();
             return View();
         }
@@ -108,9 +147,11 @@ namespace uni_aspnet_1.Controllers
                     if (!doesUserExist(email)) {
                         var new_user = new AdminUser(email, password);
                         users.Add(new_user);
-                        var cookie = new HttpCookie("session");
-                        cookie["id"] = new_user.session_id;
-                        Response.Cookies.Add(cookie);                        
+                        var cookie = new HttpCookie("session", new_user.session_id);
+                        //cookie.Domain = "/";
+                        cookie.Expires = DateTime.Now.AddDays(7);
+                        Response.Cookies.Add(cookie);
+                        System.Diagnostics.Debug.WriteLine("User created");
                     }else{
                         errors.Add("Пользователь с таким e-mail уже существует");
                     }
@@ -135,6 +176,14 @@ namespace uni_aspnet_1.Controllers
                     return u;
             }
 
+            return null;
+        }
+
+        private AdminUser findUserBySessionId(string session_id) { 
+            foreach(var u in users){
+                if(u.session_id == session_id)
+                    return u;
+            }
             return null;
         }
 

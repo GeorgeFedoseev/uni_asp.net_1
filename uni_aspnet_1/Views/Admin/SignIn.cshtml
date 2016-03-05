@@ -1,9 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "Вход для администратора";
+    ViewBag.Title = "Вход";
 }
 
-<h2>Вход для администратора</h2>
+<h2>Вход</h2>
 
 @foreach (var e in ViewBag.errors) { 
     <p style="color:white; background-color:red;">@e</p>
@@ -14,3 +14,5 @@
     <input type="password" name="password"><br>
     <input type="submit">
 </form>
+
+<br><a href="@Url.Action("SignUp")">Зарегистрироваться</a>
