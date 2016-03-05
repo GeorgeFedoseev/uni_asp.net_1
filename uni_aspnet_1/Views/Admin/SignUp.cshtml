@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Регистрация";
+}
+
+<h2>Регистрация</h2>
+
+@foreach (var e in ViewBag.errors) { 
+    <p style="color:white; background-color:red;">@e</p>
+}
+
+<form action="@Url.Action("SignUp")" method="post">
+    <br><label>E-mail:</label>
+    <br><input type="email" name="email">
+    <br><label>Пароль</label>
+    <br><input type="password" name="password">
+    <br><label>Пароль еще раз</label>
+    <br><input type="password" name="password_again"><br>
+    <input type="submit">
+</form>

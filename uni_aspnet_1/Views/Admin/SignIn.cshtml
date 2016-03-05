@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Вход для администратора";
+}
+
+<h2>Вход для администратора</h2>
+
+@foreach (var e in ViewBag.errors) { 
+    <p style="color:white; background-color:red;">@e</p>
+}
+
+<form action="@Url.Action("SignIn")" method="post">
+    <input type="email" name="email"><br>
+    <input type="password" name="password"><br>
+    <input type="submit">
+</form>
