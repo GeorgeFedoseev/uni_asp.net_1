@@ -83,6 +83,29 @@ namespace uni_aspnet_1.Controllers
                 return RedirectToAction("SignIn");
             }            
         }
+
+        private bool checkAdmin() { 
+         if (Request.Cookies["session"] == null) {
+                return false;
+            }
+
+            if(findUserBySessionId(Request.Cookies["session"].Value) == null)
+                return false;
+
+            return true;   
+        }
+
+        [HttpPost]
+        public ActionResult editSurveyResult(int index, string name, string surname) {
+            if (!checkAdmin())
+                return HttpNotFound();
+
+            var sr = MvcApplication.surveyResults[index];
+            sr.name = name;
+            sr.surname = surname;
+            MvcApplication.surveyResults[index] = sr;
+            return RedirectToAction("Index");
+        }
         
         [HttpGet]
         public ActionResult SignIn() {

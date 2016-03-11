@@ -10,9 +10,11 @@
 }
 
 <form action="@Url.Action("SignIn")" method="post">
-    <input type="email" name="email"><br>
-    <input type="password" name="password"><br>
-    <input type="submit">
+    <label>E-mail:</label>
+    <br><input type="email" name="email">
+    <br><label>Пароль:</label>
+    <br><input type="password" name="password">
+    <br><input type="submit">
 </form>
 
 <br><a href="@Url.Action("SignUp")">Зарегистрироваться</a>

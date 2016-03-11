@@ -1,7 +1,40 @@
-﻿@{
+﻿@using uni_aspnet_1;
+@{
     ViewBag.Title = "Index";
 }
 
-<h2>Admin Index</h2>
+<h2>Редактирование данных опроса:</h2>
 
+@if (MvcApplication.surveyResults.Count > 0) {
+    <table cellpadding="7">
+     <tr>
+        <th>Номер</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Занятость</th>
+    </tr>
+    @{int i = 1;}
+    @foreach (var result in MvcApplication.surveyResults) { 
+        <form action="@Url.Action("editSurveyResult")" method="post">
+            <tr>
+                <td>@i</td>
+                <input type="hidden" name="index" value="@(i-1)" />
+                <td><input type="text" name="name" value="@result.name" /></td>
+                <td><input type="text" name="surname" value="@result.surname" /></td>
+                <td>@result.localizedHobby()</td>
+                <td><input type="submit" value="Сохранить" /></td>
+            </tr>
+        </form>
+
+        i++;
+    }
+    </table>
+}else{
+    <text>Пока ничего</text>
+}
+
+<br>
+<br>
+<br><a href="@Url.Action("Results", "Survey")">Все результаты</a>
+<br><a href="@Url.Action("Index", "Home")">Главная</a>
 <br><a href="@Url.Action("SignOut")">Выйти</a>
