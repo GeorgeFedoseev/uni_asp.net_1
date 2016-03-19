@@ -19,3 +19,10 @@
  ```c#
  <p>Your Message: @("Number is"+number))</p>
  ```
+ ```c#
+@if(true){ 
+    <text>
+     some simple text
+    </text>
+}
+```
