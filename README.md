@@ -17,7 +17,7 @@
 }
  ```
  ```c#
- <p>Your Message: @("Number is"+number))</p>
+ <p>Your Message: @("Number is"+number)</p>
  ```
  ```c#
 @if(true){ 
