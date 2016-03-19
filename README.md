@@ -22,7 +22,7 @@
  ```c#
 @if(true){ 
     <text>
-     some simple text
+     some simple text and your name: @name
     </text>
 }
 ```
